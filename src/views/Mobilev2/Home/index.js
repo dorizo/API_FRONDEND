@@ -15,6 +15,7 @@ import 'react-spring-bottom-sheet/dist/style.css';
 import { ADD_PROJECT, DELETE_PROJECT, GET_PROJECTS_CAT, UPDATE_PROJECT } from 'services/project';
 import Welcome from '../components/Welcome';
 import Viewproject from '../components/Viewproejct';
+import { useProject } from 'hooks/useProjectnew';
 
 export default function Index() {
     const { checkPermision } = useMee();
@@ -28,7 +29,7 @@ export default function Index() {
     const [itemSelected, setItemSelected] = useState(null);
     const [note, setNote] = useState('');
     const [projectDate, setProjectDate] = useState(null);
-    const { data, isLoading } = useQuery('GET_PROJECTS_CAT', GET_PROJECTS_CAT);
+    const { data: datacat, isLoading: lodingcat } = useQuery('GET_PROJECTS_CAT', GET_PROJECTS_CAT);
     const { snackBarOpen, SnackBarComponent } = useSnackbar();
     const [anchorEl, setAnchorEl] = useState(null);
     const openMenu = Boolean(anchorEl);
@@ -52,10 +53,10 @@ export default function Index() {
         setCode(null);
         setOpen(true);
     };
-    const cat = data && data.data;
+    const cat = datacat && datacat.data;
 
     const qc = useQueryClient();
-    if (isLoading) {
+    if (lodingcat) {
         return <LoadingPage />;
     }
     const handleSimpan = async () => {
@@ -68,6 +69,7 @@ export default function Index() {
             cat_id: projectCategory,
             project_note: note
         };
+
         setLoading(true);
         const response = itemSelected ? await UPDATE_PROJECT(data, itemSelected.project_id) : await ADD_PROJECT(data);
         if (response.status === 400) {

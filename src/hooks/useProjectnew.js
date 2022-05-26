@@ -82,6 +82,12 @@ const ProjectProvider = ({ children, initialValue }) => {
         setOpen(true);
         setRadioValue('6');
     };
+    const handlekhsv2 = (item) => {
+        console.log(item);
+        setKhsIdSelected(item);
+        setOpen(true);
+        setRadioValue('6');
+    };
     const handleKhsSource = (item) => {
         console.log(item, 'iiii');
         setKhsListSelected(item);
@@ -456,6 +462,7 @@ const ProjectProvider = ({ children, initialValue }) => {
                 handleFinal,
                 handleEditKhsList,
                 handleFeederComplete,
+                handlekhsv2,
                 setRadioValue,
                 setOpen,
                 setFeederSelected,

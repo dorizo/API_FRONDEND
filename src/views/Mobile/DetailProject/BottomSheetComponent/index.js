@@ -8,7 +8,6 @@ import KhsComponent from './khs';
 import DistribusiComplete from './distribusiComplete';
 import FeederComplete from './feederComplete';
 import DistribusiFinal from './distribusiCompleteFinal';
-import DatateknisComponenv2 from './DatateknisComponenv2';
 
 export {
     DistribusiFinal,
@@ -20,6 +19,5 @@ export {
     SitaxComponent,
     DistribusiComponent,
     DesignatorComponent,
-    AddFileComponent,
-    DatateknisComponenv2
+    AddFileComponent
 };

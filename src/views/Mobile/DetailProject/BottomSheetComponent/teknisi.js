@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import { PROJECT_ADD_TEKNISI, PROJECT_UPDATE_TEKNISI } from 'services/projectnew';
+import { PROJECT_ADD_TEKNISI, PROJECT_UPDATE_TEKNISI } from 'services/project';
 import { GET_USERS } from 'services/user';
 
 export default function TeknisiComponent(props) {
@@ -60,7 +60,6 @@ export default function TeknisiComponent(props) {
             await qc.fetchQuery(['GET_PROJECTSINGLE', params.idProject]);
             onClose();
         }
-        onClose();
         await setLoading(false);
     };
     if (isLoading) {

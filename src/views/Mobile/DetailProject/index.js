@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-alert */
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { Button, Grid } from '@mui/material';
@@ -10,7 +13,7 @@ import CardDetailProject from '../components/CardDetailProject';
 import { useMee } from 'contexts/MeContext';
 import TeknisiPart from './TeknisiPart';
 import SitaxPart from './SitaxPart';
-import { SitaxComponent, TeknisiComponent, DatateknisComponenv2 } from './BottomSheetComponent';
+import { SitaxComponent, TeknisiComponent } from './BottomSheetComponent';
 import Datateknis from './Datateknis';
 
 const radios = [
@@ -51,9 +54,11 @@ function App() {
         projectTechnician,
         radioValue,
         open,
+        khsIdSelected,
         SnackBarComponent,
         snackBarOpen,
-        project
+        project,
+        handlekhsv2
     } = useProject();
     const [colapse, setColapse] = useState(null);
     const handleColapse = (id) => {
@@ -167,35 +172,28 @@ function App() {
                 <TeknisiPart />
                 <SitaxPart />
                 <Datateknis />
-                <SnackBarComponent />
-                {open && radioValue === '1' && (
-                    <TeknisiComponent
-                        snackBarOpen={snackBarOpen}
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        projectTechnician={projectTechnician}
-                    />
-                )}
-
-                {open && radioValue === '4' && (
-                    <SitaxComponent
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        item={projectSitax}
-                        id={project.project_id}
-                        onAdd={handleAddSitax}
-                    />
-                )}
-                {open && radioValue === '6' && (
-                    <DatateknisComponenv2
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        item={projectSitax}
-                        id={project.project_id}
-                        onAdd={handleAddSitax}
-                    />
-                )}
             </div>
+
+            <SnackBarComponent />
+            {radioValue}
+            {open && radioValue === '1' && (
+                <TeknisiComponent
+                    snackBarOpen={snackBarOpen}
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    projectTechnician={projectTechnician}
+                />
+            )}
+
+            {open && radioValue === '4' && (
+                <SitaxComponent
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    item={projectSitax}
+                    id={project.project_id}
+                    onAdd={handleAddSitax}
+                />
+            )}
         </div>
     );
 }
