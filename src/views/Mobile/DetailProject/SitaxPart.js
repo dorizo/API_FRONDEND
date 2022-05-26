@@ -21,7 +21,7 @@ export default function SitaxPart() {
                     <>
                         <h5>Total : {convertToRupiah(projectSitax?.sitax_total)}</h5>
                         <Stack direction="row" spacing={1}>
-                            {projectSitax && projectSitax.sitax_list.map((l) => <Chip label={l} />)}
+                            {projectSitax && projectSitax.sitax_list.map((l) => <Chip key={l} label={l} />)}
                         </Stack>
                     </>
                 )}

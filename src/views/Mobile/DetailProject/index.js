@@ -1,5 +1,6 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate, useParams } from 'react-router';
+import React, { useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { Button, Grid } from '@mui/material';
 import { GET_PROJECTSD } from 'services/projectnew';
@@ -9,18 +10,8 @@ import CardDetailProject from '../components/CardDetailProject';
 import { useMee } from 'contexts/MeContext';
 import TeknisiPart from './TeknisiPart';
 import SitaxPart from './SitaxPart';
-import {
-    AddFileComponent,
-    DesignatorComponent,
-    DistribusiComplete,
-    DistribusiComponent,
-    DistribusiFinal,
-    FeederComplete,
-    FeederComponent,
-    KhsComponent,
-    SitaxComponent,
-    TeknisiComponent
-} from './BottomSheetComponent';
+import { SitaxComponent, TeknisiComponent, DatateknisComponenv2 } from './BottomSheetComponent';
+import Datateknis from './Datateknis';
 
 const radios = [
     { name: 'Teknisi', value: '1' },
@@ -33,13 +24,12 @@ const radios = [
 
 export default function Index() {
     const params = useParams();
-    // console.log(params);
+    const location = useLocation();
     const { data, isLoading, refetch } = useQuery(['GET_PROJECTSINGLE', params.idProject], () => GET_PROJECTSD(params.idProject));
     if (isLoading) {
         return <LoadingPage />;
     }
     const project = data.data;
-    console.log('data', project);
     return (
         <ProjectProvider
             initialValue={{
@@ -53,50 +43,28 @@ export default function Index() {
 }
 function App() {
     const {
-        handelMinDT,
         openModal,
-        handelPlusDT,
-        handleAddDistribusi,
-        handleAddFeeder,
-        handleAddKhs,
-        handleAddKhsList,
         handleAddSitax,
-        handleChangeKhsL,
-        handleDeleteKhsList,
-        handleDistribusiComplete,
-        handleDistribusiFinal,
-        handleKhsSource,
-        handleUpdateFeeder,
-        handleUpdateDistribusi,
-        handleUpdateKhsList,
         checkPermisionFile,
-        handleEditKhsList,
-        handleFeederComplete,
         setOpen,
         projectSitax,
-        projectSurvey,
         projectTechnician,
-        projectKhs,
         radioValue,
         open,
-        feederSelected,
-        disSelected,
-        khsListSelected,
-        dataTeknisi,
-        expanded,
-        expandedKhsL,
         SnackBarComponent,
         snackBarOpen,
-        project,
-        khsSource,
-        refetch,
-        handleAddDataTeknisi,
-        handleDeleteDataTeknisList,
-        handleAddDataTeknisiNext
+        project
     } = useProject();
+    const [colapse, setColapse] = useState(null);
+    const handleColapse = (id) => {
+        if (id === colapse) {
+            setColapse(null);
+        } else {
+            setColapse(id);
+        }
+    };
     const navigate = useNavigate();
     const { checkPermision } = useMee();
-    console.log('gila', project);
     return (
         <div>
             <div className="container mb-4">
@@ -113,7 +81,7 @@ function App() {
                                 (checkPermision('CTEC') || checkPermision('UTEC'))
                             ) {
                                 return (
-                                    <Grid item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
+                                    <Grid key={idx} item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
                                         <Button
                                             key={idx}
                                             id={`radio-${idx}`}
@@ -124,7 +92,6 @@ function App() {
                                             value={radio.value}
                                             onClick={() => openModal(radio.value)}
                                             checked={radioValue === radio.value}
-                                            // disabled={Number(radio.value) <= status ? 0 : 1}
                                             style={{
                                                 backgroundColor: '#DB1F1F',
                                                 color: 'white',
@@ -142,7 +109,7 @@ function App() {
                         if (radio.value === '4') {
                             if (project.project_status === 'Survey' && checkPermision('CUSI')) {
                                 return (
-                                    <Grid item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
+                                    <Grid key={idx} item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
                                         <Button
                                             key={idx}
                                             id={`radio-${idx}`}
@@ -170,7 +137,7 @@ function App() {
                         }
                         if (radio.value === '5' && checkPermisionFile()) {
                             return (
-                                <Grid item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
+                                <Grid key={idx} item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
                                     <Button
                                         key={idx}
                                         id={`radio-${idx}`}
@@ -199,6 +166,7 @@ function App() {
                 </Grid>
                 <TeknisiPart />
                 <SitaxPart />
+                <Datateknis />
                 <SnackBarComponent />
                 {open && radioValue === '1' && (
                     <TeknisiComponent
@@ -211,6 +179,15 @@ function App() {
 
                 {open && radioValue === '4' && (
                     <SitaxComponent
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        item={projectSitax}
+                        id={project.project_id}
+                        onAdd={handleAddSitax}
+                    />
+                )}
+                {open && radioValue === '6' && (
+                    <DatateknisComponenv2
                         open={open}
                         onClose={() => setOpen(false)}
                         item={projectSitax}

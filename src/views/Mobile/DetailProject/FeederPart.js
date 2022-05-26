@@ -23,7 +23,7 @@ import {
     Typography
 } from '@mui/material';
 import { useMee } from 'contexts/MeContext';
-import { useProject } from 'hooks/useProject';
+import { useProject } from 'hooks/useProjectnew';
 import React from 'react';
 
 export default function FeederPart() {

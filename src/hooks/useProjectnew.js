@@ -327,6 +327,7 @@ const ProjectProvider = ({ children, initialValue }) => {
         setOpen(false);
     };
     const openModal = (value) => {
+        console.log(value);
         setSelectedTeknisi(null);
         setDisSelected(null);
         setOpen(true);
@@ -347,21 +348,6 @@ const ProjectProvider = ({ children, initialValue }) => {
         // setLoading(true);
         if (khsIdSelected?.khs_id) {
             console.log(data, 'datateknisi');
-            // {
-            //     "designator_id": "1",
-            //     "khs_list_qty": "12",
-            //     "tipe": "ODP",
-            //     "ODP": {
-            //         "address": "asd",
-            //         "lg": 21321,
-            //         "lt": 21323,
-            //         "benchmark_address": "asd",
-            //         "core": 7,
-            //         "core_opsi": 7,
-            //         "distribusi_core_opsi": 9,
-            //         "distribusi_core": 9
-            //     }
-            // }
             let param = data;
             param.khs_id = khsIdSelected?.khs_id;
 

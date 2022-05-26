@@ -15,14 +15,8 @@ import NextPlanIcon from '@mui/icons-material/NextPlan';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import EditRoadIcon from '@mui/icons-material/EditRoad';
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
 
 export default function Index() {
-    const [dataproject, setDatadataproject] = useState();
-    useEffect(async () => {
-        const result = await GET_PROJECTALL;
-        setDatadataproject(result.data);
-    }, []);
     const navigate = useNavigate();
     const { isLoading, isFetching, error, data, status } = useQuery(['GET_PROJECT_DATA'], GET_PROJECTALL);
     if (isLoading) {
