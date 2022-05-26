@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { useState, useEffect } from 'react';
-import { ADD_PROJECT_SUB, SUB_PROJEC_VIEW } from 'services/datateknis';
+import { ADD_PROJECT_KHSV2, ADD_PROJECT_SUB, SUB_PROJEC_VIEW } from 'services/datateknis';
 import { useParams } from 'react-router';
 import { useQuery, useQueryClient } from 'react-query';
 import { Col, Container, Form, Modal, Row } from 'react-bootstrap';
@@ -58,7 +58,6 @@ export default function Datateknis() {
             Setdatatamabah(datatambah - 1);
         }
     };
-    // khs change disini
     const khschange = (event, SelectChangeEvent) => {
         console.log(event.target.value);
         if (event.target.value === '3' || event.target.value === '4') {
@@ -70,8 +69,16 @@ export default function Datateknis() {
             }
         } else {
             setShowodc(false);
-            console.log('kosong');
         }
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        console.log(e);
+        const response = await ADD_PROJECT_KHSV2(data);
+        setShow(false);
+        await qc.fetchQuery(['SUB_PROJECT_VIEW', params.idProject]);
     };
     return (
         <>
@@ -98,8 +105,34 @@ export default function Datateknis() {
                     {datateknisget.data.data.map((i) => (
                         <Box key={i.id_project_sub} sx={{ paddingTop: 3 }}>
                             <h6>Data Teknis {i.urutan_project}</h6>
-                            <Card sx={{ boxShadow: 2, marginBottom: 3 }}>
-                                <CardContent>sdfasf</CardContent>
+                            <Card sx={{ boxShadow: 2, marginBottom: 3, paddingBottom: 2 }}>
+                                <CardContent>
+                                    {i.datateknisdisini.map((xx) => (
+                                        <div key={xx.id_project_khs_v2} sx={{ paddingTop: 3 }}>
+                                            <div className="position-relative p-2 mb-2 card">
+                                                <div className="card-header">{xx.nama_khs_kategori}</div>
+                                                <div className="card-body">
+                                                    <h6>Khs List</h6>
+                                                </div>
+                                                <div className="card-footer">
+                                                    <Button
+                                                        // onClick={() => {
+                                                        //     console.log(i.id_project_sub);
+                                                        //     handleShow(i.id_project_sub);
+                                                        // }}
+                                                        variant="contained"
+                                                        sx={{ bgcolor: '#f00' }}
+                                                        size="small"
+                                                        value={i.id_project_sub}
+                                                        startIcon={<AddCircleOutlineOutlinedIcon />}
+                                                    >
+                                                        Insert KHS
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </CardContent>
                             </Card>
                             <Button
                                 onClick={() => {
@@ -120,11 +153,11 @@ export default function Datateknis() {
             </Card>
 
             <Modal show={show} onHide={handleClose} fullscreen>
-                <Modal.Header closeButton>
-                    <Modal.Title>Tambah Data Teknis {Idprojectsub}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form onSubmit={handleFormSubmit}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Tambah Data Teknis {Idprojectsub}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Select name="id_khs_kategori" onChange={khschange}>
                                 <option value={1}>Feeder</option>
@@ -136,39 +169,40 @@ export default function Datateknis() {
                         <div style={{ display: showodc ? 'block' : 'none' }}>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>ALAMAT</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
+                                <Form.Control type="hidden" value={Idprojectsub} name="id_project_sub" placeholder="Enter email" />
+                                <Form.Control type="text" placeholder="Enter email" name="alamat" />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>ALAMAT PATOKAN</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
+                                <Form.Control type="text" placeholder="Enter email" name="patokan_alamat" />
                             </Form.Group>
                             <Container>
                                 <Row>
                                     <Col>
                                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label>LATITUDE</Form.Label>
-                                            <Form.Control type="email" placeholder="Enter email" />
+                                            <Form.Label>LONGITUDE</Form.Label>
+                                            <Form.Control type="number" placeholder="" name="long" />
                                         </Form.Group>
                                     </Col>
                                     <Col>
                                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label>LONGITUDE</Form.Label>
-                                            <Form.Control type="email" placeholder="Enter email" />
+                                            <Form.Label>LATITUDE</Form.Label>
+                                            <Form.Control type="number" placeholder="Enter email" name="lat" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
                             </Container>
                         </div>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Keluar
+                        </Button>
+                        <Button type="submit" variant="primary">
+                            Simpan
+                        </Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </>
     );
