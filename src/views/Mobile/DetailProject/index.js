@@ -8,6 +8,7 @@ import ProjectProvider, { useProject } from 'hooks/useProjectnew';
 import CardDetailProject from '../components/CardDetailProject';
 import { useMee } from 'contexts/MeContext';
 import TeknisiPart from './TeknisiPart';
+import SitaxPart from './SitaxPart';
 import {
     AddFileComponent,
     DesignatorComponent,
@@ -197,6 +198,7 @@ function App() {
                     })}
                 </Grid>
                 <TeknisiPart />
+                <SitaxPart />
                 <SnackBarComponent />
                 {open && radioValue === '1' && (
                     <TeknisiComponent
@@ -204,6 +206,16 @@ function App() {
                         open={open}
                         onClose={() => setOpen(false)}
                         projectTechnician={projectTechnician}
+                    />
+                )}
+
+                {open && radioValue === '4' && (
+                    <SitaxComponent
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        item={projectSitax}
+                        id={project.project_id}
+                        onAdd={handleAddSitax}
                     />
                 )}
             </div>

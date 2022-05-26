@@ -47,7 +47,7 @@ const ProjectProvider = ({ children, initialValue }) => {
 
     const { snackBarOpen, SnackBarComponent } = useSnackbar();
     const navigate = useNavigate();
-    // const projectSitax = project.sitax;
+    const projectSitax = project.sitax;
     // const projectSurvey = project.survey;
     const projectTechnician = project.technician;
     // const projectKhs = project.khs;
@@ -484,7 +484,7 @@ const ProjectProvider = ({ children, initialValue }) => {
                 snackBarOpen,
                 refetch,
                 SnackBarComponent,
-                // projectSitax,
+                projectSitax,
                 // projectSurvey,
                 projectTechnician,
                 // projectKhs,

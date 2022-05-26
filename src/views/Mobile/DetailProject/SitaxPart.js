@@ -6,7 +6,7 @@ import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material/';
 import { Card, CardContent, CardHeader, Chip, IconButton, Stack, Typography } from '@mui/material';
 import React from 'react';
 import convertToRupiah from 'utils/curency';
-import { useProject } from 'hooks/useProject';
+import { useProject } from 'hooks/useProjectnew';
 
 export default function SitaxPart() {
     const { projectSitax } = useProject();

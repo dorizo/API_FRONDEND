@@ -126,7 +126,7 @@ export default function Index() {
                                 margin="dense"
                                 name="name"
                                 id="name"
-                                value={code || ''}
+                                value={code}
                                 defaultValue="-"
                                 onChange={(e) => setCode(e.target.value)}
                                 label="Project Code"
@@ -159,7 +159,7 @@ export default function Index() {
                             <DatePicker
                                 minDate={projectStart}
                                 label="Estimasi Selesai"
-                                value={projectDone || ''}
+                                value={projectDone}
                                 onChange={(newValue) => {
                                     setProjectDone(newValue);
                                 }}
@@ -212,7 +212,7 @@ export default function Index() {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                value={note || ''}
+                                value={note}
                                 onChange={(e) => setNote(e.target.value)}
                                 variant="standard"
                                 fullWidth
