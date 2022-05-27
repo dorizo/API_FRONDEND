@@ -10,6 +10,7 @@ import { ADD_PROJECT_KHSV2, ADD_PROJECT_SUB, SUB_PROJEC_VIEW } from 'services/da
 import { useParams } from 'react-router';
 import { useQuery, useQueryClient } from 'react-query';
 import { Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import Khslist from './khs/Khslist';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -22,6 +23,11 @@ export default function Datateknis() {
     const [show, setShow] = useState(false);
     const [Idprojectsub, Setidprojectsub] = useState(null);
     const [showodc, setShowodc] = useState(false);
+    const [showodp, setShowodp] = useState(false);
+    const core1 = [1, 2, 3, 4, 5];
+    const core2 = [1, 2, 3, 4, 5];
+    const core3 = [1, 2, 3, 4, 5];
+    const core4 = [1, 2, 3, 4, 5];
 
     const handleClose = () => setShow(false);
     const handleShow = (id) => {
@@ -61,14 +67,17 @@ export default function Datateknis() {
     const khschange = (event, SelectChangeEvent) => {
         console.log(event.target.value);
         if (event.target.value === '3' || event.target.value === '4') {
-            if (event.target.value === 4) {
+            if (event.target.value === '4') {
                 setShowodc(true);
+                setShowodp(true);
             } else {
                 setShowodc(true);
+                setShowodp(false);
                 console.log(event.target.value);
             }
         } else {
             setShowodc(false);
+            setShowodp(false);
         }
     };
 
@@ -105,59 +114,39 @@ export default function Datateknis() {
                     {datateknisget.data.data.map((i) => (
                         <Box key={i.id_project_sub} sx={{ paddingTop: 3 }}>
                             <h6>Data Teknis {i.urutan_project}</h6>
-                            <Card sx={{ boxShadow: 2, marginBottom: 3, paddingBottom: 2 }}>
-                                <CardContent>
+                            <div className="mb-3">
+                                <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
                                     {i.datateknisdisini.map((xx) => (
-                                        <div key={xx.id_project_khs_v2} sx={{ paddingTop: 3 }}>
-                                            <div className="position-relative p-2 mb-2 card">
-                                                <div className="card-header">{xx.nama_khs_kategori}</div>
-                                                <div className="card-body">
-                                                    <h6>Khs List</h6>
-                                                </div>
-                                                <div className="card-footer">
-                                                    <Button
-                                                        // onClick={() => {
-                                                        //     console.log(i.id_project_sub);
-                                                        //     handleShow(i.id_project_sub);
-                                                        // }}
-                                                        variant="contained"
-                                                        sx={{ bgcolor: '#f00' }}
-                                                        size="small"
-                                                        value={i.id_project_sub}
-                                                        startIcon={<AddCircleOutlineOutlinedIcon />}
-                                                    >
-                                                        Insert KHS
-                                                    </Button>
-                                                </div>
-                                            </div>
+                                        <div key={xx.id_project_khs_v2} className="mb-2">
+                                            <Khslist data={xx} />
                                         </div>
                                     ))}
-                                </CardContent>
-                            </Card>
-                            <Button
-                                onClick={() => {
-                                    console.log(i.id_project_sub);
-                                    handleShow(i.id_project_sub);
-                                }}
-                                variant="contained"
-                                sx={{ bgcolor: '#f00' }}
-                                size="small"
-                                value={i.id_project_sub}
-                                startIcon={<AddCircleOutlineOutlinedIcon />}
-                            >
-                                Tambah Data Teknis
-                            </Button>
+                                </div>
+                                <Button
+                                    onClick={() => {
+                                        console.log(i.id_project_sub);
+                                        handleShow(i.id_project_sub);
+                                    }}
+                                    variant="contained"
+                                    sx={{ bgcolor: '#f00' }}
+                                    size="small"
+                                    value={i.id_project_sub}
+                                    startIcon={<AddCircleOutlineOutlinedIcon />}
+                                >
+                                    Tambah Data Teknis
+                                </Button>
+                            </div>
+                            <h6>Data GPON {i.urutan_project}</h6>
                         </Box>
                     ))}
                 </CardContent>
             </Card>
-
             <Modal show={show} onHide={handleClose} fullscreen>
-                <Form onSubmit={handleFormSubmit}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Tambah Data Teknis {Idprojectsub}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+                <Modal.Header closeButton>
+                    <Modal.Title>Tambah Data Teknis {Idprojectsub}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form id="myForm" onSubmit={handleFormSubmit}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Select name="id_khs_kategori" onChange={khschange}>
                                 <option value={1}>Feeder</option>
@@ -166,7 +155,7 @@ export default function Datateknis() {
                                 <option value={4}>ODP</option>
                             </Form.Select>
                         </Form.Group>
-                        <div style={{ display: showodc ? 'block' : 'none' }}>
+                        <Container style={{ display: showodc ? 'block' : 'none' }}>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>ALAMAT</Form.Label>
                                 <Form.Control type="hidden" value={Idprojectsub} name="id_project_sub" placeholder="Enter email" />
@@ -176,33 +165,81 @@ export default function Datateknis() {
                                 <Form.Label>ALAMAT PATOKAN</Form.Label>
                                 <Form.Control type="text" placeholder="Enter email" name="patokan_alamat" />
                             </Form.Group>
-                            <Container>
-                                <Row>
-                                    <Col>
-                                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label>LONGITUDE</Form.Label>
-                                            <Form.Control type="number" placeholder="" name="long" />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label>LATITUDE</Form.Label>
-                                            <Form.Control type="number" placeholder="Enter email" name="lat" />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Keluar
-                        </Button>
-                        <Button type="submit" variant="primary">
-                            Simpan
-                        </Button>
-                    </Modal.Footer>
-                </Form>
+                            <Row>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>LONGITUDE</Form.Label>
+                                        <Form.Control type="number" placeholder="" name="long" />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>LATITUDE</Form.Label>
+                                        <Form.Control type="number" placeholder="Enter email" name="lat" />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Container>
+                        <Container style={{ display: showodp ? 'block' : 'none' }}>
+                            <Row>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Core Feeder</Form.Label>
+                                        <Form.Select name="odp_core_feeder">
+                                            <option value={0}>pilih</option>
+                                            {core1.map((number) => (
+                                                <option value={number}>{number}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Bestray ODC</Form.Label>
+                                        <Form.Select name="odp_bestrey_odc">
+                                            <option value={0}>pilih</option>
+                                            {core2.map((number) => (
+                                                <option value={number}>{number}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Core Distribusi ODC</Form.Label>
+                                        <Form.Select name="odp_core_distribusi">
+                                            <option value={0}>pilih</option>
+                                            {core3.map((number) => (
+                                                <option value={number}>{number}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Bastray Distribusi ODC</Form.Label>
+                                        <Form.Select name="odp_bastrey_distribusi">
+                                            <option value={0}>pilih</option>
+                                            {core4.map((number) => (
+                                                <option value={number}>{number}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Keluar
+                    </Button>
+                    <Button type="submit" Form="myForm" variant="primary">
+                        Simpan
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </>
     );

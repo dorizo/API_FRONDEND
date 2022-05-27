@@ -175,7 +175,6 @@ function App() {
             </div>
 
             <SnackBarComponent />
-            {radioValue}
             {open && radioValue === '1' && (
                 <TeknisiComponent
                     snackBarOpen={snackBarOpen}
