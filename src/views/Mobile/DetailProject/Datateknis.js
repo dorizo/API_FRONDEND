@@ -43,7 +43,7 @@ export default function Datateknis() {
     useEffect(() => {
         if (!islodingdatateknis) {
             Setdatatamabah(datateknisget.data.data.length);
-            console.log(datateknisget.data.data.length);
+            // console.log(datateknisget.data.data.length);
         }
     }, [islodingdatateknis]);
     if (islodingdatateknis) {
@@ -59,13 +59,13 @@ export default function Datateknis() {
             };
             const response = await ADD_PROJECT_SUB(data);
             await qc.fetchQuery(['SUB_PROJECT_VIEW', params.idProject]);
-            console.log(response.data);
+            // console.log(response.data);
         } else {
             Setdatatamabah(datatambah - 1);
         }
     };
     const khschange = (event, SelectChangeEvent) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         if (event.target.value === '3' || event.target.value === '4') {
             if (event.target.value === '4') {
                 setShowodc(true);
@@ -73,7 +73,7 @@ export default function Datateknis() {
             } else {
                 setShowodc(true);
                 setShowodp(false);
-                console.log(event.target.value);
+                // console.log(event.target.value);
             }
         } else {
             setShowodc(false);
@@ -84,7 +84,7 @@ export default function Datateknis() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        console.log(e);
+        // console.log(e);
         const response = await ADD_PROJECT_KHSV2(data);
         setShow(false);
         await qc.fetchQuery(['SUB_PROJECT_VIEW', params.idProject]);
@@ -118,13 +118,13 @@ export default function Datateknis() {
                                 <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
                                     {i.datateknisdisini.map((xx) => (
                                         <div key={xx.id_project_khs_v2} className="mb-2">
-                                            <Khslist data={xx} />
+                                            <Khslist data={xx} projectid={params.idProject} />
                                         </div>
                                     ))}
                                 </div>
                                 <Button
                                     onClick={() => {
-                                        console.log(i.id_project_sub);
+                                        // console.log(i.id_project_sub);
                                         handleShow(i.id_project_sub);
                                     }}
                                     variant="contained"
@@ -188,7 +188,9 @@ export default function Datateknis() {
                                         <Form.Select name="odp_core_feeder">
                                             <option value={0}>pilih</option>
                                             {core1.map((number) => (
-                                                <option value={number}>{number}</option>
+                                                <option key={number} value={number}>
+                                                    {number}
+                                                </option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
@@ -199,7 +201,9 @@ export default function Datateknis() {
                                         <Form.Select name="odp_bestrey_odc">
                                             <option value={0}>pilih</option>
                                             {core2.map((number) => (
-                                                <option value={number}>{number}</option>
+                                                <option key={number} value={number}>
+                                                    {number}
+                                                </option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
@@ -212,7 +216,9 @@ export default function Datateknis() {
                                         <Form.Select name="odp_core_distribusi">
                                             <option value={0}>pilih</option>
                                             {core3.map((number) => (
-                                                <option value={number}>{number}</option>
+                                                <option key={number} value={number}>
+                                                    {number}
+                                                </option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
@@ -223,7 +229,9 @@ export default function Datateknis() {
                                         <Form.Select name="odp_bastrey_distribusi">
                                             <option value={0}>pilih</option>
                                             {core4.map((number) => (
-                                                <option value={number}>{number}</option>
+                                                <option key={number} value={number}>
+                                                    {number}
+                                                </option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
