@@ -116,7 +116,7 @@ export default function Datateknis() {
                             <h6>Data Teknis {i.urutan_project}</h6>
                             <div className="mb-3">
                                 <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-                                    {i.datateknisdisini.map((xx) => (
+                                    {i?.datateknisdisini?.map((xx) => (
                                         <div key={xx.id_project_khs_v2} className="mb-2">
                                             <Khslist data={xx} projectid={params.idProject} />
                                         </div>
