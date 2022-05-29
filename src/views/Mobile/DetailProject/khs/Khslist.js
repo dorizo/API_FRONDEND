@@ -1,25 +1,28 @@
 /* eslint-disable consistent-return */
 import { Button } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Card, Col, Form, Modal, Row } from 'react-bootstrap';
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { useQuery, useQueryClient } from 'react-query';
 import { ADD_PROJECT_KHSV2_DETAIL, DESIGNATOR_VIEW_ALL } from 'services/datateknis';
 import { Search } from '@mui/icons-material';
+import Khsdetaillist from './Khsdetaillist';
 
 function Khslist(props) {
+    const { data } = props;
     const querylagi = useQueryClient();
     const [showkhs, setshowkhs] = useState(false);
     const [showsetketerangan, Setsetshowsetketerangan] = useState(false);
     const [idprojectsub, Setidprojectsub] = useState(false);
     const handleClosekhs = () => setshowkhs(false);
     const handleClosekhsketerangan = () => Setsetshowsetketerangan(false);
-    const [variable, Setvariable] = useState(props);
+    // const [variable, Setvariable] = useState(props);
     const [serching, Setseraching] = useState('');
     const [d, setd] = useState('');
     const [dataafter, Setdataafter] = useState('');
     const [Singledatakhs, Setsinggledatakhs] = useState('');
+    const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
     function handleShowkhs(id) {
         setshowkhs(true);
         Setidprojectsub(id);
@@ -40,7 +43,6 @@ function Khslist(props) {
         // console.log('loading lagi ya');
         Setdataafter(designatordata);
     }
-
     const submitsinglekhs = (koooo) => () => {
         // console.log(koooo);
         setshowkhs(false);
@@ -58,28 +60,31 @@ function Khslist(props) {
         // console.log(props);
         const dataalls = new FormData(e.target);
         const resp = await ADD_PROJECT_KHSV2_DETAIL(dataalls);
-        // console.log(resp);
-        querylagi.fetchQuery(['SUB_PROJECT_VIEW', variable.projectid]);
+        console.log(resp);
+        const x = await querylagi.fetchQuery(['SUB_PROJECT_VIEW', props?.projectid]);
         Setsetshowsetketerangan(false);
     };
-
+    console.log('coba lagi lagi', data);
     return (
         <>
             <div className="card">
-                <div className="card-header">{variable.data.nama_khs_kategori}</div>
+                <div className="card-header">{data?.nama_khs_kategori}</div>
                 <div className="card-body position-relative">
                     <h6>Khs List</h6>
+                    {data?.dataafter.map((v) => (
+                        <Khsdetaillist data={v} key={v.id_project_khs_v2_detail} />
+                    ))}
                 </div>
                 <div className="position-absolute bottom-0 end-0">
                     <Button
                         onClick={() => {
-                            // console.log(variable.data);
-                            handleShowkhs(variable.data);
+                            // console.log(props?.data);
+                            handleShowkhs(data?.data);
                         }}
                         variant="contained"
                         sx={{ bgcolor: '#f00' }}
                         size="small"
-                        value={variable.data.id_project_sub}
+                        value={data?.id_project_sub}
                         startIcon={<AddCircleOutlineOutlinedIcon />}
                     >
                         Insert KHS
@@ -96,8 +101,8 @@ function Khslist(props) {
                             <Form.Control type="hidden" name="designator_id" value={Singledatakhs.designator_id} required />
                             <Form.Control type="hidden" name="designator_desc" value={Singledatakhs.designator_desc} required />
                             <Form.Control type="hidden" name="designator_code" value={Singledatakhs.designator_code} required />
-                            <Form.Control type="hidden" name="id_project_sub" value={variable.data.id_project_sub} required />
-                            <Form.Control type="hidden" name="id_project_khs_v2" value={variable.data.id_project_khs_v2} required />
+                            <Form.Control type="hidden" name="id_project_sub" value={data?.id_project_sub} required />
+                            <Form.Control type="hidden" name="id_project_khs_v2" value={data?.id_project_khs_v2} required />
                             <Form.Control
                                 type="number"
                                 placeholder="Masukan jumlah kebutuhan"

@@ -2,7 +2,6 @@ import axios, { catchCallBack } from '../config';
 import qs from 'qs';
 
 const ADD_PROJECT_SUB = (projectxxxx) => {
-    console.log(projectxxxx);
     const data = qs.stringify(projectxxxx);
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`

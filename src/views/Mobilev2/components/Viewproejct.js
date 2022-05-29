@@ -22,7 +22,6 @@ export default function Index() {
     if (isLoading) {
         return true;
     }
-    console.log(data);
     return (
         <div>
             <h4>LIST PROJECT</h4>
