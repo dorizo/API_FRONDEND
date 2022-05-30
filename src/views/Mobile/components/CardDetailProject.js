@@ -260,23 +260,17 @@ export default function Index({ project }) {
                             )}
                         </div>
                     )}
-                    {project.project_status === 'Survey' &&
-                        checkPermision('CTKHS') &&
-                        project.khs?.length !== 0 &&
-                        project.survey?.length !== 0 &&
-                        project.sitax?.length !== 0 &&
-                        project.khs?.length > 0 &&
-                        project.khs.every((f) => f.khs_list?.length !== 0) && (
-                            <Button
-                                disabled={loading}
-                                onClick={() => handleSurveyToKhs(project.project_id)}
-                                style={{ marginLeft: 10 }}
-                                variant="outlined"
-                                color="success"
-                            >
-                                Approve KHS
-                            </Button>
-                        )}
+                    {project.project_status === 'Survey' && checkPermision('CTKHS') && project.sitax?.length !== 0 && (
+                        <Button
+                            disabled={loading}
+                            onClick={() => handleSurveyToKhs(project.project_id)}
+                            style={{ marginLeft: 10 }}
+                            variant="outlined"
+                            color="success"
+                        >
+                            Approve KHS
+                        </Button>
+                    )}
                     {project.project_status === 'KHS Check' &&
                         project.khs.every((f) => f.khs_list?.every((a) => a.stock_chosen?.length !== 0)) &&
                         checkPermision('CMKHS') && (

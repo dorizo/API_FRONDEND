@@ -60,19 +60,23 @@ function Khslist(props) {
         // console.log(props);
         const dataalls = new FormData(e.target);
         const resp = await ADD_PROJECT_KHSV2_DETAIL(dataalls);
-        console.log(resp);
         const x = await querylagi.fetchQuery(['SUB_PROJECT_VIEW', props?.projectid]);
         Setsetshowsetketerangan(false);
     };
-    console.log('coba lagi lagi', data);
     return (
         <>
             <div className="card">
                 <div className="card-header">{data?.nama_khs_kategori}</div>
                 <div className="card-body position-relative">
                     <h6>Khs List</h6>
-                    {data?.dataafter.map((v) => (
-                        <Khsdetaillist data={v} key={v.id_project_khs_v2_detail} />
+                    {data?.dataafter.map((v, i) => (
+                        <Khsdetaillist
+                            data={v}
+                            key={v.id_project_khs_v2_detail}
+                            index="0"
+                            projectid={props?.projectid}
+                            witelid={props?.witelid}
+                        />
                     ))}
                 </div>
                 <div className="position-absolute bottom-0 end-0">
@@ -98,6 +102,8 @@ function Khslist(props) {
                 <Modal.Body>
                     <Form id="myFormkhsproject" onSubmit={handleFormSubmitkhsproject}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Control type="hidden" name="service_price" value={Singledatakhs.service_price} required />
+                            <Form.Control type="hidden" name="material_price" value={Singledatakhs.material_price} required />
                             <Form.Control type="hidden" name="designator_id" value={Singledatakhs.designator_id} required />
                             <Form.Control type="hidden" name="designator_desc" value={Singledatakhs.designator_desc} required />
                             <Form.Control type="hidden" name="designator_code" value={Singledatakhs.designator_code} required />

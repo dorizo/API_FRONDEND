@@ -19,7 +19,8 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary
 }));
-export default function Datateknis() {
+export default function Datateknis(props) {
+    const { witelid } = props;
     const [show, setShow] = useState(false);
     const [Idprojectsub, Setidprojectsub] = useState(null);
     const [showodc, setShowodc] = useState(false);
@@ -42,8 +43,7 @@ export default function Datateknis() {
     const [datatambah, Setdatatamabah] = useState(0);
     useEffect(() => {
         if (!islodingdatateknis) {
-            Setdatatamabah(datateknisget.data.data.length);
-            // console.log(datateknisget.data.data.length);
+            Setdatatamabah(datateknisget?.data?.data?.length);
         }
     }, [islodingdatateknis]);
     if (islodingdatateknis) {
@@ -111,14 +111,14 @@ export default function Datateknis() {
                             </Grid>
                         </Grid>
                     </Box>
-                    {datateknisget.data.data.map((i) => (
+                    {datateknisget?.data?.data?.map((i) => (
                         <Box key={i.id_project_sub} sx={{ paddingTop: 3 }}>
                             <h6>Data Teknis {i.urutan_project}</h6>
                             <div className="mb-3">
                                 <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
                                     {i?.datateknisdisini?.map((xx) => (
                                         <div key={xx.id_project_khs_v2} className="mb-2">
-                                            <Khslist data={xx} projectid={params.idProject} />
+                                            <Khslist data={xx} projectid={params.idProject} witelid={witelid} />
                                         </div>
                                     ))}
                                 </div>

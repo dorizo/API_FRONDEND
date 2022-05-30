@@ -171,7 +171,7 @@ function App() {
                 </Grid>
                 <TeknisiPart />
                 <SitaxPart />
-                <Datateknis />
+                <Datateknis witelid={project.witel_id} />
             </div>
 
             <SnackBarComponent />
