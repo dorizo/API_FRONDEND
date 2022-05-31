@@ -71,6 +71,21 @@ const UPDATE_KHS_DESIGNATOR = ({ Khsstatusproject, idprojectkhsv2detail }) => {
         .then((response) => response)
         .catch((error) => catchCallBack(error));
 };
+
+const UPDATE_KHS_DESIGNATOR_STOK = ({ Khsstatusproject, idprojectkhsv2detail }) => {
+    const data = qs.stringify({
+        id_stok: Khsstatusproject,
+        id_project_khs_v2_detail: idprojectkhsv2detail
+    });
+    console.log('ssss', data);
+    const headers = {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    };
+    return axios
+        .post(`Datateknis/updateproject_khs_v2_detail`, data, { headers })
+        .then((response) => response)
+        .catch((error) => catchCallBack(error));
+};
 // eslint-disable-next-line import/prefer-default-export
 export {
     ADD_PROJECT_SUB,
@@ -79,5 +94,6 @@ export {
     DESIGNATOR_VIEW_ALL,
     ADD_PROJECT_KHSV2_DETAIL,
     UPDATE_KHS_DESIGNATOR,
-    SEARCH_STOCK_ALL
+    SEARCH_STOCK_ALL,
+    UPDATE_KHS_DESIGNATOR_STOK
 };

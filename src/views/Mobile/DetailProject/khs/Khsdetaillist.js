@@ -2,7 +2,7 @@ import { useMee } from 'contexts/MeContext';
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useQuery, useQueryClient } from 'react-query';
-import { DESIGNATOR_VIEW_ALL, SEARCH_STOCK_ALL, UPDATE_KHS_DESIGNATOR } from 'services/datateknis';
+import { DESIGNATOR_VIEW_ALL, SEARCH_STOCK_ALL, UPDATE_KHS_DESIGNATOR, UPDATE_KHS_DESIGNATOR_STOK } from 'services/datateknis';
 
 function Khsdetaillist(props) {
     const { data, index, projectid, witelid } = props;
@@ -22,11 +22,9 @@ function Khsdetaillist(props) {
         console.log(event.target.value, data?.id_project_khs_v2_detail);
     };
     const datastokwilayah = async (event) => {
-        // const searcingdata = event.target.value;
-        // const kode = data?.id_project_khs_v2_detail;
-        // // eslint-disable-next-line react-hooks/rules-of-hooks
-        // const datastokwilayahku = useQuery(['STOK_DATA', { searcingdata, kode }], SEARCH_STOCK_ALL);
-        // console.log(datastokwilayahku);
+        await UPDATE_KHS_DESIGNATOR_STOK({ Khsstatusproject: event.target.value, idprojectkhsv2detail: data?.id_project_khs_v2_detail });
+        const x = await querylagi.fetchQuery(['SUB_PROJECT_VIEW', projectid]);
+        console.log(event.target.value, data?.id_project_khs_v2_detail);
     };
     return (
         <>
@@ -58,15 +56,19 @@ function Khsdetaillist(props) {
                 />
                 {data?.Khs_status_project === 'API' && (
                     <>
-                        <Form.Select aria-label="Default select example" onClick={datastokwilayah}>
-                            {data?.stock?.map((e) => (
-                                <>
-                                    <option>
-                                        Stock : {e.stock_qty} ,Harga {e.stock_price}
-                                    </option>
-                                </>
-                            ))}
-                        </Form.Select>
+                        {data?.id_stok === '0' && (
+                            <Form.Select aria-label="Default select example" onClick={datastokwilayah}>
+                                <option value={0}>Pilih Stock(Stok tidak dapat di rubah)</option>
+                                {data?.stock?.map((e) => (
+                                    <>
+                                        <option value={e.stock_id}>
+                                            Stock : {e.stock_qty} ,Harga {e.stock_price}
+                                        </option>
+                                    </>
+                                ))}
+                            </Form.Select>
+                        )}
+                        {data?.id_stok !== '0' && <p>Stock sudah terisi Mohon hubungin admin jika ada perubahan</p>}
                     </>
                 )}
             </div>

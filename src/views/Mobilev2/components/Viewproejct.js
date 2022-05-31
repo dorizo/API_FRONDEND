@@ -67,6 +67,9 @@ export default function Index() {
                         <Typography variant="h6" color="text.secondary">
                             Status Project : {post.project_status}
                         </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            {post?.project_note}
+                        </Typography>
                     </CardContent>
                     <CardActions sx={{ p: 2 }}>
                         <Button variant="contained" size="small" startIcon={<DeleteSweepIcon />}>

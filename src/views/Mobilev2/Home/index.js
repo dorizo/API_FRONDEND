@@ -183,7 +183,7 @@ export default function Index() {
                                     Category
                                 </InputLabel>
                                 <Select onChange={(e) => setProjectCategory(e.target.value)} labelId="label-cat" id="select">
-                                    {cat.data.map((item) => {
+                                    {cat?.data?.map((item) => {
                                         if (item.sub_cat) {
                                             const SUB = item.sub_cat.map((sc) => {
                                                 if (sc.sub_cat) {

@@ -10,7 +10,7 @@ import { Search } from '@mui/icons-material';
 import Khsdetaillist from './Khsdetaillist';
 
 function Khslist(props) {
-    const { data } = props;
+    const { data, witelid } = props;
     const querylagi = useQueryClient();
     const [showkhs, setshowkhs] = useState(false);
     const [showsetketerangan, Setsetshowsetketerangan] = useState(false);
@@ -23,6 +23,7 @@ function Khslist(props) {
     const [dataafter, Setdataafter] = useState('');
     const [Singledatakhs, Setsinggledatakhs] = useState('');
     const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+    console.log(props);
     function handleShowkhs(id) {
         setshowkhs(true);
         Setidprojectsub(id);
@@ -107,7 +108,9 @@ function Khslist(props) {
                             <Form.Control type="hidden" name="designator_id" value={Singledatakhs.designator_id} required />
                             <Form.Control type="hidden" name="designator_desc" value={Singledatakhs.designator_desc} required />
                             <Form.Control type="hidden" name="designator_code" value={Singledatakhs.designator_code} required />
+                            <Form.Control type="hidden" name="product_id" value={Singledatakhs.product_id} required />
                             <Form.Control type="hidden" name="id_project_sub" value={data?.id_project_sub} required />
+                            <Form.Control type="hidden" name="witel_id" value={witelid} required />
                             <Form.Control type="hidden" name="id_project_khs_v2" value={data?.id_project_khs_v2} required />
                             <Form.Control
                                 type="number"

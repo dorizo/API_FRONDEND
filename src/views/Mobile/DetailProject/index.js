@@ -79,6 +79,7 @@ function App() {
                 <CardDetailProject project={project} />
                 <Grid sx={{ marginTop: 2, marginBottom: 2 }} container spacing={3}>
                     {radios.map((radio, idx) => {
+                        console.log('button tampil', idx);
                         if (radio.value === '1') {
                             if (
                                 project.project_status !== 'Pending' &&
@@ -112,7 +113,7 @@ function App() {
                             return null;
                         }
                         if (radio.value === '4') {
-                            if (project.project_status === 'Survey' && checkPermision('CUSI')) {
+                            if (project.project_status === 'Survey') {
                                 return (
                                     <Grid key={idx} item xs={6} sm={6} md={3} sx={{ padding: 1 }}>
                                         <Button
