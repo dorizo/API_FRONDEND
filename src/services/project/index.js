@@ -196,13 +196,14 @@ const PROJECT_APPROVE_LABELING = (id) => {
         .then((response) => response)
         .catch((error) => catchCallBack(error));
 };
-const ADD_PROJECT = ({ project_code, project_date, project_start, project_done, project_note, cat_id }) => {
+const ADD_PROJECT = ({ project_code, project_date, project_start, project_done, project_note, cat_id, project_name }) => {
     const data = qs.stringify({
         project_code,
         project_date,
         project_start,
         project_done,
         project_note,
+        project_name,
         cat_id
     });
     const headers = {
@@ -536,14 +537,15 @@ const PROJECT_UPDATE_DISTRIBUSI = (
         .then((response) => response)
         .catch((error) => catchCallBack(error));
 };
-const UPDATE_PROJECT = ({ project_date, project_start, project_done, project_code, project_note, cat_id }, id) => {
+const UPDATE_PROJECT = ({ project_date, project_start, project_done, project_code, project_note, cat_id, name_project }, id) => {
     const data = qs.stringify({
         project_date,
         project_start,
         project_done,
         project_code,
         project_note,
-        cat_id
+        cat_id,
+        name_project
     });
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`

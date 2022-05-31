@@ -26,6 +26,7 @@ export default function Index() {
     const [projectCategory, setProjectCategory] = useState(null);
     const [projectStart, setProjectStart] = useState(null);
     const [projectDone, setProjectDone] = useState(null);
+    const [projectName, setprojectName] = useState(null);
     const [itemSelected, setItemSelected] = useState(null);
     const [note, setNote] = useState('');
     const [projectDate, setProjectDate] = useState(null);
@@ -63,6 +64,7 @@ export default function Index() {
         const c = code || '-';
         const data = {
             project_code: c,
+            project_name: projectName,
             project_start: projectStart.format('YYYY-MM-DD'),
             project_done: projectDone.format('YYYY-MM-DD'),
             project_date: projectDate.format('YYYY-MM-DD'),
@@ -132,6 +134,20 @@ export default function Index() {
                                 defaultValue="-"
                                 onChange={(e) => setCode(e.target.value)}
                                 label="Project Code"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                autoComplete="off"
+                                margin="dense"
+                                name="name_project"
+                                id="name_project"
+                                value={projectName}
+                                onChange={(e) => setprojectName(e.target.value)}
+                                label="Project Name"
                                 type="text"
                                 fullWidth
                                 variant="standard"
