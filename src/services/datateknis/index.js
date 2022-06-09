@@ -2,6 +2,7 @@ import axios, { catchCallBack } from '../config';
 import qs from 'qs';
 
 const ADD_PROJECT_SUB = (projectxxxx) => {
+    // const inputFile = useRef(null);
     const data = qs.stringify(projectxxxx);
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -51,7 +52,6 @@ const SEARCH_STOCK_ALL = (Search) => {
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     };
-    console.log(Search);
     return axios
         .get(`stock/witel/id/${Search.witelid}`, { headers })
         .then((response) => response)
@@ -77,7 +77,6 @@ const UPDATE_KHS_DESIGNATOR_STOK = ({ Khsstatusproject, idprojectkhsv2detail }) 
         id_stok: Khsstatusproject,
         id_project_khs_v2_detail: idprojectkhsv2detail
     });
-    console.log('ssss', data);
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     };
@@ -87,6 +86,26 @@ const UPDATE_KHS_DESIGNATOR_STOK = ({ Khsstatusproject, idprojectkhsv2detail }) 
         .catch((error) => catchCallBack(error));
 };
 // eslint-disable-next-line import/prefer-default-export
+// hendle untuk semua file onclick dan paromater yang di input
+const handleFileUpload = (x) => (e) => {
+    const { files } = e.target;
+    console.log('handle event', x);
+    if (files && files.length) {
+        const data = new FormData();
+        const imagedata = e.target.files[0];
+        data.append('inputname', imagedata);
+        console.log('fileType', data); // ex: zip, rar, jpg, svg etc.
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        };
+        return axios
+            .post(`uploadfile`, data, { headers })
+            .then((response) => response)
+            .catch((error) => catchCallBack(error));
+    }
+    return true;
+};
+
 export {
     ADD_PROJECT_SUB,
     SUB_PROJEC_VIEW,
@@ -95,5 +114,6 @@ export {
     ADD_PROJECT_KHSV2_DETAIL,
     UPDATE_KHS_DESIGNATOR,
     SEARCH_STOCK_ALL,
-    UPDATE_KHS_DESIGNATOR_STOK
+    UPDATE_KHS_DESIGNATOR_STOK,
+    handleFileUpload
 };

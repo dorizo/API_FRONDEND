@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { Button, Grid } from '@mui/material';
@@ -15,6 +15,9 @@ import TeknisiPart from './TeknisiPart';
 import SitaxPart from './SitaxPart';
 import { SitaxComponent, TeknisiComponent } from './BottomSheetComponent';
 import Datateknis from './Datateknis';
+import ListDocumentComponent from '../components/ListDocument';
+import { Col, Modal, Row } from 'react-bootstrap';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const radios = [
     { name: 'Teknisi', value: '1' },
@@ -45,6 +48,7 @@ export default function Index() {
     );
 }
 function App() {
+    const inputFile = useRef(null);
     const {
         openModal,
         handleAddSitax,
@@ -60,7 +64,9 @@ function App() {
         project,
         handlekhsv2
     } = useProject();
+    const [filemanagerku, setfilenamagerku] = useState({ open: false, urlfile: `project/${project.project_id}/` });
     const [colapse, setColapse] = useState(null);
+    const { projectSurvey, SetprojectSurvey } = useState();
     const handleColapse = (id) => {
         if (id === colapse) {
             setColapse(null);
@@ -68,8 +74,13 @@ function App() {
             setColapse(id);
         }
     };
+    const handlefilemanagerclose = () => {
+        setfilenamagerku({ open: false, urlfile: `project/${project.project_id}/` });
+    };
+    // console.log(filemanagerku.open);
     const navigate = useNavigate();
     const { checkPermision } = useMee();
+    // untuk file upload
     return (
         <div>
             <div className="container mb-4">
@@ -79,7 +90,6 @@ function App() {
                 <CardDetailProject project={project} />
                 <Grid sx={{ marginTop: 2, marginBottom: 2 }} container spacing={3}>
                     {radios.map((radio, idx) => {
-                        console.log('button tampil', idx);
                         if (radio.value === '1') {
                             if (
                                 project.project_status !== 'Pending' &&
@@ -134,7 +144,7 @@ function App() {
                                                 width: '100%'
                                             }}
                                         >
-                                            {radio.name}v
+                                            {radio.name}
                                         </Button>
                                     </Grid>
                                 );
@@ -172,7 +182,8 @@ function App() {
                 </Grid>
                 <TeknisiPart />
                 <SitaxPart />
-                <Datateknis witelid={project.witel_id} />
+                <Datateknis witelid={project.witel_id} project={project} filemanager={setfilenamagerku} />
+                <ListDocumentComponent idProject={project.project_id} survey={projectSurvey} />
             </div>
 
             <SnackBarComponent />
@@ -194,6 +205,41 @@ function App() {
                     onAdd={handleAddSitax}
                 />
             )}
+            <Modal show={filemanagerku.open} onHide={handlefilemanagerclose} fullscreen dialogClassName="custom-modal">
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h6>FILE MANAGER</h6>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col xs={8}>
+                            <h6>FILE MANAGER</h6>
+                        </Col>
+                        <Col xs={4} className="position-relative">
+                            <div className="position-absolute end-0">
+                                <input
+                                    style={{ display: 'none' }}
+                                    ref={inputFile}
+                                    // onChange={handleFileUpload({ kodeproject: project?.project_status })}
+                                    type="file"
+                                />
+                                <Button
+                                    // onClick={onButtonClick({
+                                    //     fileget: `project/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}`
+                                    // })}
+                                    size="small"
+                                    variant="contained"
+                                    color="success"
+                                >
+                                    <CloudUploadIcon className="m-1" /> Upload
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
+                    <h1>{filemanagerku?.urlfile?.fileget}</h1>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }

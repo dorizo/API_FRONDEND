@@ -10,7 +10,7 @@ import { Search } from '@mui/icons-material';
 import Khsdetaillist from './Khsdetaillist';
 
 function Khslist(props) {
-    const { data, witelid } = props;
+    const { data, witelid, project, filemanager } = props;
     const querylagi = useQueryClient();
     const [showkhs, setshowkhs] = useState(false);
     const [showsetketerangan, Setsetshowsetketerangan] = useState(false);
@@ -23,7 +23,6 @@ function Khslist(props) {
     const [dataafter, Setdataafter] = useState('');
     const [Singledatakhs, Setsinggledatakhs] = useState('');
     const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
-    console.log(props);
     function handleShowkhs(id) {
         setshowkhs(true);
         Setidprojectsub(id);
@@ -77,6 +76,8 @@ function Khslist(props) {
                             index="0"
                             projectid={props?.projectid}
                             witelid={props?.witelid}
+                            project={project}
+                            filemanager={filemanager}
                         />
                     ))}
                 </div>

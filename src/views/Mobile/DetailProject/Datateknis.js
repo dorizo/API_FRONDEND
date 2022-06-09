@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }));
 export default function Datateknis(props) {
-    const { witelid } = props;
+    const { witelid, project, filemanager } = props;
     const [show, setShow] = useState(false);
     const [Idprojectsub, Setidprojectsub] = useState(null);
     const [showodc, setShowodc] = useState(false);
@@ -57,7 +57,8 @@ export default function Datateknis(props) {
                 nm_project_sub: '',
                 id_project: params.idProject
             };
-            const response = await ADD_PROJECT_SUB(data);
+            console.log(data);
+            await ADD_PROJECT_SUB(data);
             await qc.fetchQuery(['SUB_PROJECT_VIEW', params.idProject]);
             // console.log(response.data);
         } else {
@@ -118,7 +119,13 @@ export default function Datateknis(props) {
                                 <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
                                     {i?.datateknisdisini?.map((xx) => (
                                         <div key={xx.id_project_khs_v2} className="mb-2">
-                                            <Khslist data={xx} projectid={params.idProject} witelid={witelid} />
+                                            <Khslist
+                                                data={xx}
+                                                projectid={params.idProject}
+                                                witelid={witelid}
+                                                project={project}
+                                                filemanager={filemanager}
+                                            />
                                         </div>
                                     ))}
                                 </div>
