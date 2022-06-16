@@ -15,7 +15,7 @@ import 'react-spring-bottom-sheet/dist/style.css';
 import { ADD_PROJECT, DELETE_PROJECT, GET_PROJECTS_CAT, UPDATE_PROJECT } from 'services/project';
 import Welcome from '../components/Welcome';
 import Viewproject from '../components/Viewproejct';
-import { useProject } from 'hooks/useProjectnew';
+// import { useProject } from 'hooks/useProjectnew';
 
 export default function Index() {
     const { checkPermision } = useMee();

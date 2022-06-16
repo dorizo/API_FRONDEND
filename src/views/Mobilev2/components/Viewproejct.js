@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router';
 
 export default function Index() {
     const navigate = useNavigate();
-    const { isLoading, isFetching, error, data, status } = useQuery(['GET_PROJECT_DATA'], GET_PROJECTALL);
+    const { isLoading, data } = useQuery(['GET_PROJECT_DATA'], GET_PROJECTALL);
     if (isLoading) {
         return true;
     }

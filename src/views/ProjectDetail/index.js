@@ -4,16 +4,16 @@ import { Button, Card } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import { SUB_PROJEC_VIEW } from 'services/datateknis';
-import { GET_PROJECT } from 'services/project';
-import { GET_PROJECTALL, GET_PROJECTSD } from 'services/projectnew';
+// import { GET_PROJECT } from 'services/project';
+import { GET_PROJECTSD } from 'services/projectnew';
 
-export default function Index(props) {
+export default function Index() {
     const params = useParams();
-    const { SnackBarComponent, snackBarOpen } = useSnackbar();
+    const { SnackBarComponent } = useSnackbar();
     const {
         data: projectdata,
-        isLoading: loadingproject,
-        refetch
+        isLoading: loadingproject
+        // refetch
     } = useQuery(['GET_PROJECT', params.idProject], () => GET_PROJECTSD(params.idProject));
     const { data: datateknisget, isLoading: islodingdatateknis } = useQuery(['SUB_PROJECT_VIEW', params.idProject], () =>
         SUB_PROJEC_VIEW(params.idProject)
