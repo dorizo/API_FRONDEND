@@ -5,8 +5,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useQuery } from 'react-query';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, CircularProgress } from '@mui/material';
 import { GET_PROJECTSD } from 'services/projectnew';
+import { GET_IMAGES } from 'services/upload';
 import LoadingPage from 'components/Loading';
 import ProjectProvider, { useProject } from 'hooks/useProjectnew';
 import CardDetailProject from '../components/CardDetailProject';
@@ -80,7 +81,27 @@ function App() {
     // console.log(filemanagerku.open);
     const navigate = useNavigate();
     const { checkPermision } = useMee();
+
     // untuk file upload
+    const [files, setFiles] = useState();
+    const onChangeUpload = (e) => {
+        const file = e.target.files[0];
+        setFiles(file);
+        const reader = new FileReader();
+        reader.onload = () => {
+            const preview = [reader.result];
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const body = {
+        level: filemanagerku?.urlfile?.fileget
+    };
+    const { data, isLoading, refetch, isFetching } = useQuery(['GET_IMAGES', { body }], () => GET_IMAGES({ body }), {
+        keepPreviousData: true,
+        select: (response) => response.data
+    });
+
     return (
         <div>
             <div className="container mb-4">
@@ -231,13 +252,27 @@ function App() {
                                     size="small"
                                     variant="contained"
                                     color="success"
+                                    component="label"
+                                    onChange={onChangeUpload}
                                 >
+                                    <CircularProgress size={20} thickness={10} style={{ marginRight: 10 }} />
                                     <CloudUploadIcon className="m-1" /> Upload
+                                    <input name="imageTrip" type="file" hidden />
                                 </Button>
                             </div>
                         </Col>
                     </Row>
                     <h1>{filemanagerku?.urlfile?.fileget}</h1>
+                    <Grid container>
+                        <Grid sm={3}>
+                            <img
+                                style={{ width: '100%', height: 300 }}
+                                alt=""
+                                // src={previewImages}
+                                className="shadow-lg rounded border-none"
+                            />
+                        </Grid>
+                    </Grid>
                 </Modal.Body>
             </Modal>
         </div>
