@@ -4,12 +4,12 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { Button, Grid, CircularProgress } from '@mui/material';
 import { GET_PROJECTSD } from 'services/projectnew';
-import { GET_IMAGES } from 'services/upload';
+import { GET_IMAGES, UPLOAD_IMAGES } from 'services/upload';
 import LoadingPage from 'components/Loading';
-import LoadingComponent from 'components/LoadingComponent';
+// import LoadingComponent from 'components/LoadingComponent';
 import ProjectProvider, { useProject } from 'hooks/useProjectnew';
 import CardDetailProject from '../components/CardDetailProject';
 import { useMee } from 'contexts/MeContext';
@@ -84,6 +84,7 @@ function App() {
     const { checkPermision } = useMee();
 
     // untuk file upload
+    const queryClient = useQueryClient();
     const [files, setFiles] = useState();
     const onChangeUpload = (e) => {
         const file = e.target.files[0];
@@ -95,6 +96,27 @@ function App() {
         reader.readAsDataURL(file);
     };
 
+    const [loading, setLoading] = useState(false);
+    const handleUpload = async () => {
+        setLoading(true);
+        const level = filemanagerku?.urlfile?.fileget;
+        try {
+            const result = await UPLOAD_IMAGES({ level, files });
+            setLoading(false);
+            queryClient.invalidateQueries('GET_IMAGES');
+            console.log(result, 'iki result');
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (files) {
+            handleUpload();
+        }
+    }, [files]);
+
     const body = {
         level: filemanagerku?.urlfile?.fileget
     };
@@ -102,8 +124,6 @@ function App() {
         keepPreviousData: true,
         select: (response) => response.data.data
     });
-
-    console.log(data, 'iki datane');
 
     return (
         <div>
@@ -258,7 +278,7 @@ function App() {
                                     component="label"
                                     onChange={onChangeUpload}
                                 >
-                                    <CircularProgress size={20} thickness={10} style={{ marginRight: 10 }} />
+                                    {loading && <CircularProgress size={20} thickness={10} style={{ marginRight: 10 }} />}
                                     <CloudUploadIcon className="m-1" /> Upload
                                     <input name="imageTrip" type="file" hidden />
                                 </Button>
