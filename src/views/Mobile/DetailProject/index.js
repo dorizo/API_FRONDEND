@@ -266,16 +266,19 @@ function App() {
                         </Col>
                     </Row>
                     {/* <h1>{filemanagerku?.urlfile?.fileget}</h1> */}
-                    {isLoading || isFetching ? (
+                    {isLoading ? (
                         <div className="p-5">Loading ...</div>
                     ) : (
-                        <Grid container spacing={3}>
+                        <Grid container spacing={3} pt={5}>
                             {data?.map((item, key) => (
-                                <Grid item sm={3} key={key}>
+                                <Grid item sm={6} md={3} xs={12} key={key}>
+                                    {console.log(item.file.split('/')[6].slice(1, 100))}
                                     <img
                                         style={{ width: '100%', height: 300 }}
                                         alt=""
-                                        src={process.env.REACT_APP_API_URL + item.file}
+                                        src={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}/${item.file
+                                            .split('/')[6]
+                                            .slice(1, 100)}`}
                                         className="shadow-lg rounded border-none"
                                     />
                                 </Grid>
