@@ -9,6 +9,7 @@ import { Button, Grid, CircularProgress } from '@mui/material';
 import { GET_PROJECTSD } from 'services/projectnew';
 import { GET_IMAGES } from 'services/upload';
 import LoadingPage from 'components/Loading';
+import LoadingComponent from 'components/LoadingComponent';
 import ProjectProvider, { useProject } from 'hooks/useProjectnew';
 import CardDetailProject from '../components/CardDetailProject';
 import { useMee } from 'contexts/MeContext';
@@ -99,8 +100,10 @@ function App() {
     };
     const { data, isLoading, refetch, isFetching } = useQuery(['GET_IMAGES', { body }], () => GET_IMAGES({ body }), {
         keepPreviousData: true,
-        select: (response) => response.data
+        select: (response) => response.data.data
     });
+
+    console.log(data, 'iki datane');
 
     return (
         <div>
@@ -262,17 +265,23 @@ function App() {
                             </div>
                         </Col>
                     </Row>
-                    <h1>{filemanagerku?.urlfile?.fileget}</h1>
-                    <Grid container>
-                        <Grid sm={3}>
-                            <img
-                                style={{ width: '100%', height: 300 }}
-                                alt=""
-                                // src={previewImages}
-                                className="shadow-lg rounded border-none"
-                            />
+                    {/* <h1>{filemanagerku?.urlfile?.fileget}</h1> */}
+                    {isLoading || isFetching ? (
+                        <div className="p-5">Loading ...</div>
+                    ) : (
+                        <Grid container spacing={3}>
+                            {data?.map((item, key) => (
+                                <Grid item sm={3} key={key}>
+                                    <img
+                                        style={{ width: '100%', height: 300 }}
+                                        alt=""
+                                        src={process.env.REACT_APP_API_URL + item.file}
+                                        className="shadow-lg rounded border-none"
+                                    />
+                                </Grid>
+                            ))}
                         </Grid>
-                    </Grid>
+                    )}
                 </Modal.Body>
             </Modal>
         </div>

@@ -4,16 +4,15 @@ import qs from 'qs';
 const GET_IMAGES = ({ body }) => {
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/x-www-form-urlencoded'
+        // 'Content-Type': 'multipart/form-data'
     };
     const level = body.level;
     const formData = new FormData();
     formData.append('level', level);
 
-    // console.log(level, 'iki level ne');
-
     return axios
-        .post('uploadimage/getfile', { level }, { headers })
+        .post('uploadimage/getfile', formData, { headers })
         .then((response) => response)
         .catch((error) => catchCallBack(error));
 };
@@ -25,7 +24,8 @@ const UPLOAD_IMAGES = ({ level, files }) => {
 
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/x-www-form-urlencoded'
+        // 'Content-Type': 'multipart/form-data'
     };
 
     return axios
