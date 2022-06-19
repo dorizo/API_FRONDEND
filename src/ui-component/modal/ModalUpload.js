@@ -32,7 +32,6 @@ function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanage
                         </div>
                     </Col>
                 </Row>
-                {/* <h1>{filemanagerku?.urlfile?.fileget}</h1> */}
                 {isLoading ? (
                     <div className="p-5">Loading ...</div>
                 ) : (
@@ -41,8 +40,8 @@ function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanage
                             <Grid item sm={6} md={3} xs={12} key={key}>
                                 <img
                                     style={{ width: '100%', height: 300 }}
+                                    src={`${url}/${item.file.split('/')[6].slice(1, 100)}`}
                                     alt=""
-                                    src={`${url}/${item.file.split('/')[6].slice(1, 100)}}`}
                                     className="shadow-lg rounded border-none"
                                 />
                             </Grid>

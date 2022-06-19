@@ -254,12 +254,12 @@ function App() {
             )}
             <ModalUpload
                 loading={loading}
-                isLoading={isLoading}
+                isLoading={isLoading || isFetching}
                 data={data}
                 filemanagerku={filemanagerku}
                 handlefilemanagerclose={handlefilemanagerclose}
                 onChangeUpload={onChangeUpload}
-                url={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}}`}
+                url={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}`}
             />
         </div>
     );

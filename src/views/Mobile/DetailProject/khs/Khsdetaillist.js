@@ -1,14 +1,14 @@
 import { useMee } from 'contexts/MeContext';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useQuery, useQueryClient } from 'react-query';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import {
-    DESIGNATOR_VIEW_ALL,
+    // DESIGNATOR_VIEW_ALL,
     SEARCH_STOCK_ALL,
     UPDATE_KHS_DESIGNATOR,
-    UPDATE_KHS_DESIGNATOR_STOK,
-    handleFileUpload
+    UPDATE_KHS_DESIGNATOR_STOK
+    // handleFileUpload
 } from 'services/datateknis';
 
 function Khsdetaillist(props) {
@@ -19,7 +19,7 @@ function Khsdetaillist(props) {
         // console.log(fileget?.fileget);
         filemanager({ open: true, urlfile: fileget });
     };
-    const { me, role } = useMee();
+    // const { me, role } = useMee();
     const {
         data: dataselectstok,
         isLoading: loadingselectstok,
