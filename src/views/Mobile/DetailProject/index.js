@@ -66,7 +66,7 @@ function App() {
         project,
         handlekhsv2
     } = useProject();
-    const [filemanagerku, setfilenamagerku] = useState({ open: false, urlfile: `project/${project.project_id}/` });
+    const [filemanagerku, setfilenamagerku] = useState({ open: false, urlfile: `${project.project_status}/${project.project_id}/` });
     const [colapse, setColapse] = useState(null);
     const { projectSurvey, SetprojectSurvey } = useState();
     const handleColapse = (id) => {
@@ -76,8 +76,9 @@ function App() {
             setColapse(id);
         }
     };
+
     const handlefilemanagerclose = () => {
-        setfilenamagerku({ open: false, urlfile: `project/${project.project_id}/` });
+        setfilenamagerku({ open: false, urlfile: `${project.project_status}/${project.project_id}/` });
     };
     // console.log(filemanagerku.open);
     const navigate = useNavigate();
@@ -85,7 +86,7 @@ function App() {
 
     // untuk file upload
     const queryClient = useQueryClient();
-    const [files, setFiles] = useState();
+    const [files, setFiles] = useState(null);
     const onChangeUpload = (e) => {
         const file = e.target.files[0];
         setFiles(file);
@@ -100,11 +101,12 @@ function App() {
     const handleUpload = async () => {
         setLoading(true);
         const level = filemanagerku?.urlfile?.fileget;
+
         try {
-            const result = await UPLOAD_IMAGES({ level, files });
+            await UPLOAD_IMAGES({ level, files });
             setLoading(false);
             queryClient.invalidateQueries('GET_IMAGES');
-            console.log(result, 'iki result');
+            setFiles(null);
         } catch (error) {
             setLoading(false);
             console.log(error);
@@ -292,7 +294,6 @@ function App() {
                         <Grid container spacing={3} pt={5}>
                             {data?.map((item, key) => (
                                 <Grid item sm={6} md={3} xs={12} key={key}>
-                                    {console.log(item.file.split('/')[6].slice(1, 100))}
                                     <img
                                         style={{ width: '100%', height: 300 }}
                                         alt=""

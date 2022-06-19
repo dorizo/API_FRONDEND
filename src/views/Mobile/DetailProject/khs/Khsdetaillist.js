@@ -93,7 +93,7 @@ function Khsdetaillist(props) {
                         <div className="p-2 position-relative">
                             <Button
                                 onClick={onButtonClick({
-                                    fileget: `project/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}`
+                                    fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}`
                                 })}
                                 size="sm"
                                 className="position-absolute bottom-0 end-0 mr-2"
