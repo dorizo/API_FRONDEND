@@ -2,10 +2,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useQuery, useQueryClient } from 'react-query';
-import { Button, Grid, CircularProgress } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { GET_PROJECTSD } from 'services/projectnew';
 import { GET_IMAGES, UPLOAD_IMAGES } from 'services/upload';
 import LoadingPage from 'components/Loading';
@@ -18,8 +18,9 @@ import SitaxPart from './SitaxPart';
 import { SitaxComponent, TeknisiComponent } from './BottomSheetComponent';
 import Datateknis from './Datateknis';
 import ListDocumentComponent from '../components/ListDocument';
-import { Col, Modal, Row } from 'react-bootstrap';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import { Col, Modal, Row } from 'react-bootstrap';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ModalUpload from 'ui-component/modal/ModalUpload';
 
 const radios = [
     { name: 'Teknisi', value: '1' },
@@ -50,7 +51,7 @@ export default function Index() {
     );
 }
 function App() {
-    const inputFile = useRef(null);
+    // const inputFile = useRef(null);
     const {
         openModal,
         handleAddSitax,
@@ -251,63 +252,15 @@ function App() {
                     onAdd={handleAddSitax}
                 />
             )}
-            <Modal show={filemanagerku.open} onHide={handlefilemanagerclose} fullscreen dialogClassName="custom-modal">
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <h6>FILE MANAGER</h6>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Row>
-                        <Col xs={8}>
-                            <h6>FILE MANAGER</h6>
-                        </Col>
-                        <Col xs={4} className="position-relative">
-                            <div className="position-absolute end-0">
-                                <input
-                                    style={{ display: 'none' }}
-                                    ref={inputFile}
-                                    // onChange={handleFileUpload({ kodeproject: project?.project_status })}
-                                    type="file"
-                                />
-                                <Button
-                                    // onClick={onButtonClick({
-                                    //     fileget: `project/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}`
-                                    // })}
-                                    size="small"
-                                    variant="contained"
-                                    color="success"
-                                    component="label"
-                                    onChange={onChangeUpload}
-                                >
-                                    {loading && <CircularProgress size={20} thickness={10} style={{ marginRight: 10 }} />}
-                                    <CloudUploadIcon className="m-1" /> Upload
-                                    <input name="imageTrip" type="file" hidden />
-                                </Button>
-                            </div>
-                        </Col>
-                    </Row>
-                    {/* <h1>{filemanagerku?.urlfile?.fileget}</h1> */}
-                    {isLoading ? (
-                        <div className="p-5">Loading ...</div>
-                    ) : (
-                        <Grid container spacing={3} pt={5}>
-                            {data?.map((item, key) => (
-                                <Grid item sm={6} md={3} xs={12} key={key}>
-                                    <img
-                                        style={{ width: '100%', height: 300 }}
-                                        alt=""
-                                        src={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}/${item.file
-                                            .split('/')[6]
-                                            .slice(1, 100)}`}
-                                        className="shadow-lg rounded border-none"
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    )}
-                </Modal.Body>
-            </Modal>
+            <ModalUpload
+                loading={loading}
+                isLoading={isLoading}
+                data={data}
+                filemanagerku={filemanagerku}
+                handlefilemanagerclose={handlefilemanagerclose}
+                onChangeUpload={onChangeUpload}
+                url={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}}`}
+            />
         </div>
     );
 }
