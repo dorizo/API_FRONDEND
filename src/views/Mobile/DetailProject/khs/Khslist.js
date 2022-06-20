@@ -1,12 +1,13 @@
 /* eslint-disable consistent-return */
 import { Button } from '@mui/material';
+import AttachmentIcon from '@mui/icons-material/Attachment';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import React, { useEffect, useReducer, useState } from 'react';
-import { Card, Col, Form, Modal, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Form, Modal, Row, Button as ButtonAtt } from 'react-bootstrap';
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { useQuery, useQueryClient } from 'react-query';
 import { ADD_PROJECT_KHSV2_DETAIL, DESIGNATOR_VIEW_ALL } from 'services/datateknis';
-import { Search } from '@mui/icons-material';
+// import { Search } from '@mui/icons-material';
 import Khsdetaillist from './Khsdetaillist';
 
 function Khslist(props) {
@@ -15,18 +16,24 @@ function Khslist(props) {
     const [showkhs, setshowkhs] = useState(false);
     const [showsetketerangan, Setsetshowsetketerangan] = useState(false);
     const [idprojectsub, Setidprojectsub] = useState(false);
-    const handleClosekhs = () => setshowkhs(false);
+    // const handleClosekhs = () => setshowkhs(false);
     const handleClosekhsketerangan = () => Setsetshowsetketerangan(false);
     // const [variable, Setvariable] = useState(props);
     const [serching, Setseraching] = useState('');
     const [d, setd] = useState('');
     const [dataafter, Setdataafter] = useState('');
     const [Singledatakhs, Setsinggledatakhs] = useState('');
-    const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+
+    // const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+
     function handleShowkhs(id) {
         setshowkhs(true);
         Setidprojectsub(id);
     }
+    const onButtonClick = (fileget) => () => {
+        // console.log(fileget?.fileget);
+        filemanager({ open: true, urlfile: fileget, index: 5 });
+    };
     const {
         data: designatordata,
         isLoading: lodingdesignator,
@@ -66,7 +73,18 @@ function Khslist(props) {
     return (
         <>
             <div className="card">
-                <div className="card-header">{data?.nama_khs_kategori}</div>
+                <div className="card-header p-2 d-flex justify-content-between align-items-center">
+                    <div>{data?.nama_khs_kategori}</div>
+                    <ButtonAtt
+                        onClick={onButtonClick({
+                            fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}`
+                        })}
+                        size="sm"
+                        variant="outline-danger"
+                    >
+                        <AttachmentIcon /> att
+                    </ButtonAtt>
+                </div>
                 <div className="card-body position-relative">
                     <h6>Khs List</h6>
                     {data?.dataafter.map((v, i) => (
@@ -81,7 +99,7 @@ function Khslist(props) {
                         />
                     ))}
                 </div>
-                <div className="position-absolute bottom-0 end-0">
+                <div className="d-flex justify-content-end p-2">
                     <Button
                         onClick={() => {
                             // console.log(props?.data);

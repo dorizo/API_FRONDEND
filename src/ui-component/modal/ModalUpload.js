@@ -40,7 +40,7 @@ function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanage
                             <Grid item sm={6} md={3} xs={12} key={key}>
                                 <img
                                     style={{ width: '100%', height: 300 }}
-                                    src={`${url}/${item.file.split('/')[6].slice(1, 100)}`}
+                                    src={`${url}/${item.file.split('/')[filemanagerku.index].slice(1, 100)}`}
                                     alt=""
                                     className="shadow-lg rounded border-none"
                                 />

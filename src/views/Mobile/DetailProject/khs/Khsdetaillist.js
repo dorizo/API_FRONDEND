@@ -1,4 +1,4 @@
-import { useMee } from 'contexts/MeContext';
+// import { useMee } from 'contexts/MeContext';
 import React from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useQuery, useQueryClient } from 'react-query';
@@ -17,7 +17,7 @@ function Khsdetaillist(props) {
     const serchingdata = data?.id_project_khs_v2_detail;
     const onButtonClick = (fileget) => () => {
         // console.log(fileget?.fileget);
-        filemanager({ open: true, urlfile: fileget });
+        filemanager({ open: true, urlfile: fileget, index: 6 });
     };
     // const { me, role } = useMee();
     const {
@@ -39,7 +39,7 @@ function Khsdetaillist(props) {
     };
     return (
         <>
-            <div className="p-2 block-example border border-dark mb-4">
+            <div className="p-2 block-example border border-secondary rounded">
                 <h6>{data?.designator_code}</h6>
                 <div>{data?.designator_desc}</div>
                 <h3>quantity : {data?.totalkebutuhan}</h3>

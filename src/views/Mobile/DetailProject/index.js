@@ -67,7 +67,11 @@ function App() {
         project,
         handlekhsv2
     } = useProject();
-    const [filemanagerku, setfilenamagerku] = useState({ open: false, urlfile: `${project.project_status}/${project.project_id}/` });
+    const [filemanagerku, setfilenamagerku] = useState({
+        open: false,
+        urlfile: `${project.project_status}/${project.project_id}/`,
+        index: 0
+    });
     const [colapse, setColapse] = useState(null);
     const { projectSurvey, SetprojectSurvey } = useState();
     const handleColapse = (id) => {
@@ -79,7 +83,7 @@ function App() {
     };
 
     const handlefilemanagerclose = () => {
-        setfilenamagerku({ open: false, urlfile: `${project.project_status}/${project.project_id}/` });
+        setfilenamagerku({ open: false, urlfile: `${project.project_status}/${project.project_id}/`, index: 0 });
     };
     // console.log(filemanagerku.open);
     const navigate = useNavigate();
