@@ -91,7 +91,7 @@ function Khsdetaillist(props) {
                         )}
                     </Col>
                     <Col>
-                        <div className="p-2 position-relative">
+                        <div className="position-relative mt-4">
                             <Button
                                 onClick={onButtonClick({
                                     fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}/`
