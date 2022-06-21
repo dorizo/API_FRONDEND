@@ -32,7 +32,7 @@ function Khslist(props) {
     }
     const onButtonClick = (fileget) => () => {
         // console.log(fileget?.fileget);
-        filemanager({ open: true, urlfile: fileget, index: 5 });
+        filemanager({ open: true, urlfile: fileget });
     };
     const {
         data: designatordata,
@@ -77,7 +77,7 @@ function Khslist(props) {
                     <div>{data?.nama_khs_kategori}</div>
                     <ButtonAtt
                         onClick={onButtonClick({
-                            fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}`
+                            fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/`
                         })}
                         size="sm"
                         variant="outline-danger"
@@ -99,7 +99,7 @@ function Khslist(props) {
                         />
                     ))}
                 </div>
-                <div className="d-flex justify-content-end p-2">
+                <div className="d-flex justify-content-end pb-3" style={{ paddingRight: 17 }}>
                     <Button
                         onClick={() => {
                             // console.log(props?.data);

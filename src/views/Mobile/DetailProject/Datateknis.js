@@ -9,7 +9,8 @@ import { useState, useEffect } from 'react';
 import { ADD_PROJECT_KHSV2, ADD_PROJECT_SUB, SUB_PROJEC_VIEW } from 'services/datateknis';
 import { useParams } from 'react-router';
 import { useQuery, useQueryClient } from 'react-query';
-import { Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { Col, Container, Form, Modal, Row, Button as ButtonAtt } from 'react-bootstrap';
+import AttachmentIcon from '@mui/icons-material/Attachment';
 import Khslist from './khs/Khslist';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -90,6 +91,12 @@ export default function Datateknis(props) {
         setShow(false);
         await qc.fetchQuery(['SUB_PROJECT_VIEW', params.idProject]);
     };
+
+    const onButtonClick = (fileget) => () => {
+        // console.log(fileget?.fileget);
+        filemanager({ open: true, urlfile: fileget });
+    };
+
     return (
         <>
             <Card sx={{ boxShadow: 2 }}>
@@ -114,7 +121,19 @@ export default function Datateknis(props) {
                     </Box>
                     {datateknisget?.data?.data?.map((i) => (
                         <Box key={i.id_project_sub} sx={{ paddingTop: 3 }}>
-                            <h6>Data Teknis {i.urutan_project}</h6>
+                            <div className="d-flex justify-content-between my-2">
+                                <h6>Data Teknis {i.urutan_project}</h6>
+
+                                <ButtonAtt
+                                    onClick={onButtonClick({
+                                        fileget: `${project.project_status}/${project.project_id}/`
+                                    })}
+                                    size="sm"
+                                    variant="outline-danger"
+                                >
+                                    <AttachmentIcon /> att
+                                </ButtonAtt>
+                            </div>
                             <div className="mb-3">
                                 <div sx={{ p: 0, '&:last-child': { pb: 0 } }}>
                                     {i?.datateknisdisini?.map((xx) => (

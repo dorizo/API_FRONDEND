@@ -69,8 +69,7 @@ function App() {
     } = useProject();
     const [filemanagerku, setfilenamagerku] = useState({
         open: false,
-        urlfile: `${project.project_status}/${project.project_id}/`,
-        index: 0
+        urlfile: `${project.project_status}/${project.project_id}/`
     });
     const [colapse, setColapse] = useState(null);
     const { projectSurvey, SetprojectSurvey } = useState();
@@ -83,7 +82,7 @@ function App() {
     };
 
     const handlefilemanagerclose = () => {
-        setfilenamagerku({ open: false, urlfile: `${project.project_status}/${project.project_id}/`, index: 0 });
+        setfilenamagerku({ open: false, urlfile: `${project.project_status}/${project.project_id}/` });
     };
     // console.log(filemanagerku.open);
     const navigate = useNavigate();
@@ -263,7 +262,6 @@ function App() {
                 filemanagerku={filemanagerku}
                 handlefilemanagerclose={handlefilemanagerclose}
                 onChangeUpload={onChangeUpload}
-                url={`${process.env.REACT_APP_API_URL}assets/project/${filemanagerku?.urlfile?.fileget}`}
             />
         </div>
     );

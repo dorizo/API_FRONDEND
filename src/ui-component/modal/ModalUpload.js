@@ -3,7 +3,7 @@ import { Col, Modal, Row } from 'react-bootstrap';
 import { Button, Grid, CircularProgress } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanagerclose, onChangeUpload, url }) {
+function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanagerclose, onChangeUpload }) {
     return (
         <Modal show={filemanagerku.open} onHide={handlefilemanagerclose} fullscreen dialogClassName="custom-modal">
             <Modal.Header closeButton>
@@ -40,7 +40,7 @@ function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanage
                             <Grid item sm={6} md={3} xs={12} key={key}>
                                 <img
                                     style={{ width: '100%', height: 300 }}
-                                    src={`${url}/${item.file.split('/')[filemanagerku.index].slice(1, 100)}`}
+                                    src={`${process.env.REACT_APP_API_URL}/${item.file}`}
                                     alt=""
                                     className="shadow-lg rounded border-none"
                                 />

@@ -1,11 +1,11 @@
 // import { useMee } from 'contexts/MeContext';
 import React from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import {
     // DESIGNATOR_VIEW_ALL,
-    SEARCH_STOCK_ALL,
+    // SEARCH_STOCK_ALL,
     UPDATE_KHS_DESIGNATOR,
     UPDATE_KHS_DESIGNATOR_STOK
     // handleFileUpload
@@ -17,15 +17,16 @@ function Khsdetaillist(props) {
     const serchingdata = data?.id_project_khs_v2_detail;
     const onButtonClick = (fileget) => () => {
         // console.log(fileget?.fileget);
-        filemanager({ open: true, urlfile: fileget, index: 6 });
+        filemanager({ open: true, urlfile: fileget });
     };
     // const { me, role } = useMee();
-    const {
-        data: dataselectstok,
-        isLoading: loadingselectstok,
-        isError: errorselectstok,
-        refetch: refachstok
-    } = useQuery(['STOK_DATA', { serchingdata, data }], () => SEARCH_STOCK_ALL({ serchingdata, witelid, data }));
+    // const {
+    //     data: dataselectstok,
+    //     isLoading: loadingselectstok,
+    //     isError: errorselectstok,
+    //     refetch: refachstok
+    // } = useQuery(['STOK_DATA', { serchingdata, data }], () => SEARCH_STOCK_ALL({ serchingdata, witelid, data }));
+
     const onImageChange = async (event) => {
         // const resp = await UPDATE_PROJECT_KHSV2_DETAIL(dataalls);
         await UPDATE_KHS_DESIGNATOR({ Khsstatusproject: event.target.value, idprojectkhsv2detail: data?.id_project_khs_v2_detail });
@@ -93,7 +94,7 @@ function Khsdetaillist(props) {
                         <div className="p-2 position-relative">
                             <Button
                                 onClick={onButtonClick({
-                                    fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}`
+                                    fileget: `${project.project_status}/${project.project_id}/${data.id_project_sub}/${data.id_project_khs_v2}/${data.id_project_khs_v2_detail}/`
                                 })}
                                 size="sm"
                                 className="position-absolute bottom-0 end-0 mr-2"
