@@ -93,7 +93,6 @@ export default function Datateknis(props) {
     };
 
     const onButtonClick = (fileget) => () => {
-        // console.log(fileget?.fileget);
         filemanager({ open: true, urlfile: fileget });
     };
 

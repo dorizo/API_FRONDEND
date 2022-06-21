@@ -131,6 +131,10 @@ function App() {
         select: (response) => response.data.data
     });
 
+    const onButtonClick = (fileget) => () => {
+        setfilenamagerku({ open: true, urlfile: fileget });
+    };
+
     return (
         <div>
             <div className="container mb-4">
@@ -212,7 +216,10 @@ function App() {
                                         variant={idx % 1 ? 'outline-success' : 'outline-danger'}
                                         name="radio"
                                         value={radio.value}
-                                        onClick={() => openModal(radio.value)}
+                                        // onClick={() => openModal(radio.value)}
+                                        onClick={onButtonClick({
+                                            fileget: `${project.project_status}/${project.project_id}/`
+                                        })}
                                         checked={radioValue === radio.value}
                                         // disabled={Number(radio.value) <= status ? 0 : 1}
                                         style={{
