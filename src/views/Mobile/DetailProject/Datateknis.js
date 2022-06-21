@@ -126,7 +126,7 @@ export default function Datateknis(props) {
 
                                 <ButtonAtt
                                     onClick={onButtonClick({
-                                        fileget: `${project.project_status}/${project.project_id}/`
+                                        fileget: `${project.project_status}/${project.project_id}/${i.id_project_sub}/`
                                     })}
                                     size="sm"
                                     variant="outline-danger"
