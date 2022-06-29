@@ -38,12 +38,22 @@ function ModalUpload({ loading, isLoading, data, filemanagerku, handlefilemanage
                     <Grid container spacing={3} pt={5}>
                         {data?.map((item, key) => (
                             <Grid item sm={6} md={3} xs={12} key={key}>
-                                <img
-                                    style={{ width: '100%', height: 300 }}
-                                    src={`${process.env.REACT_APP_API_URL}/${item.file}`}
-                                    alt=""
-                                    className="shadow-lg rounded border-none"
-                                />
+                                {item.ext === 'pdf' ? (
+                                    <iframe
+                                        src={`${process.env.REACT_APP_API_URL}/${item.file}`}
+                                        width="100%"
+                                        height="100%"
+                                        title="pdf preview"
+                                        className="rounded"
+                                    />
+                                ) : (
+                                    <img
+                                        style={{ width: '100%', height: 300 }}
+                                        src={`${process.env.REACT_APP_API_URL}/${item.file}`}
+                                        alt=""
+                                        className="shadow-lg rounded border-none"
+                                    />
+                                )}
                             </Grid>
                         ))}
                     </Grid>
