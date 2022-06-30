@@ -264,7 +264,7 @@ function App() {
             )}
             <ModalUpload
                 loading={loading}
-                isLoading={isLoading || isFetching}
+                isLoading={isLoading}
                 data={data}
                 filemanagerku={filemanagerku}
                 handlefilemanagerclose={handlefilemanagerclose}
